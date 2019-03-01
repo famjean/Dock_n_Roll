@@ -6,6 +6,7 @@
 # Choose distribution to https://hub.docker.com/_/ubuntu/
 # Define distribution
 FROM ubuntu:xenial
+# to know version cat /etc/*release
 
 # Update source list
 RUN apt-get update
@@ -74,10 +75,10 @@ RUN rm *.deb
 #----------------------
 # Install R
 # For ubuntu go to: http://cran.rstudio.com/bin/linux/ubuntu/ to see updates
-RUN  echo "deb http://cran.rstudio.com/bin/linux/ubuntu xenial-cran35/" >> /etc/apt/sources.list
+RUN echo "deb http://cran.rstudio.com/bin/linux/ubuntu xenial-cran35/" >> /etc/apt/sources.list
 RUN DEBIAN_FRONTEND=noninteractive apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
 
-RUN apt-get update && apt-get install -y r-base r-base-dev
+RUN apt-get update && apt-get install -y --no-install-recommends r-base r-base-dev
 
 # Install Rstudio
 # Go to https://www.rstudio.com/products/rstudio/download/ and get link for rstudio package installer for 64 bits
@@ -91,13 +92,13 @@ RUN rm *.deb
 RUN R CMD javareconf
 
 # packages
+RUN mkdir -p /home
 COPY Install_Packages.R Install_Packages.R
 RUN Rscript Install_Packages.R
 
-# rstudio preferences # Still bug
-#RUN mkdir -p ~/.rstudio-desktop/monitored/user-settings/user-settings
-#COPY user-settings ~/.rstudio-desktop/monitored/user-settings/user-settings
-COPY user-settings /home/user-settings # put manualy afterwide 
+# rstudio preferences
+RUN mkdir -p /root/.rstudio-desktop/monitored/user-settings
+COPY user-settings /root/.rstudio-desktop/monitored/user-settings/user-settings
 
 # the default packages for everyone running R
 COPY Rprofile.site /etc/R/Rprofile.site
@@ -118,14 +119,13 @@ RUN apt-get install -y --no-install-recommends \
 MAINTAINER "François A.M Jean francois.jean.pro@gmx.com"
 LABEL OS="ubuntu xenial 16.04.5" \
       R="R 3.5.2" \
-      Rstudio="Rstudio 1.0.136"
+      MRAN="2018.12.20"
 
 # Launching
 #----------
 # Set wd
-RUN mkdir -p /home/Input
-RUN mkdir -p /home/Output
-WORKDIR ~/home/Output
+RUN mkdir -p /home/LinkFile
+WORKDIR /home
 
 # packages
 COPY launch.sh /bin/launch.sh

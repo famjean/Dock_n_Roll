@@ -45,9 +45,12 @@ load.packages <- function( PackagesNames, ...,
 }
 
 # load packages
-load.packages( #"tidyverse", "lubridate", "forcats", "stringr", "magrittr",
-#"rmarkdown", "knitr", "citr",
-#"pander", "officer", "xtable", "flextable",
-#"grid", "png", "cowplot","scales",
-"openxlsx", load = FALSE
+load.packages(
+"tidyverse", "lubridate", "forcats", "stringr",
+"magrittr",
+"rmarkdown", "knitr", "citr",
+"pander", "officer", "xtable", "flextable",
+"grid", "png", "cowplot","scales",
+"openxlsx",
+load = FALSE
 )
