@@ -26,22 +26,19 @@ Git allows to manage versions of your projects.
 
 ### Launch image (could take a while for packages loading):   
 ####For linux:  
-To correct bug for ubuntu X11:
-+ xhost local:root
-Launch:
-+ docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY famjean/dock_n_roll:UBUNTU.16.04.5_R.3.5.1_MRAN.2018-12-20 bash    
-+ docker exec -it famjean/dock_n_roll:UBUNTU.16.04.5_R.3.5.1_MRAN.2018-12-20 /usr/bin/rstudio
++ xhost local:root # To correct bug for ubuntu X11
++ docker run -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY famjean/dock_n_roll:UBUNTU.16.04.5_R.3.5.1_MRAN.2018-12-20   
 
 #### For windows:  
 + xming :0 -ac -clipboard -multiwindow   
-+ docker run -d -e DISPLAY=hostip:0   -v c:/Users/Desktop:/home/LinkFile famjean/dock_n_roll:UBUNTU.16.04.5_R.3.5.1_MRAN.2018-12-20
++ docker run -it -e DISPLAY=hostip:0   -v c:/Users/Desktop:/home/LinkFile famjean/dock_n_roll:UBUNTU.16.04.5_R.3.5.1_MRAN.2018-12-20
 
 #### For macos:   
 + brew install socat  
 + brew cask install xquartz   
 + open -a XQuartz  
 + socat TCP-LISTEN:6000,reuseaddr,fork UNIX-CLIENT:\"$DISPLAY\"   
-+ docker run -d -e DISPLAY=hostip:0 -v ~/Desktop/LinkFile:/home/LinkFile famjean/dock_n_roll:UBUNTU.16.04.5_R.3.5.1_MRAN.2018-12-20   
++ docker run -it -e DISPLAY=hostip:0 -v ~/Desktop/LinkFile:/home/LinkFile famjean/dock_n_roll:UBUNTU.16.04.5_R.3.5.1_MRAN.2018-12-20   
 
 ### More:
 See a good [tutorial](http://somatorio.org/en/post/running-gui-apps-with-docker/) for more details on adding function for docker's containers.
@@ -54,11 +51,11 @@ See [example](https://www.r-bloggers.com/running-your-r-script-in-docker/amp/) o
 ## Commit changes in image
 Launch:
 + docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY famjean/dock_n_roll:UBUNTU.16.04.5_R.3.5.1_MRAN.2018-12-20 bash    
-Detec images port:
+Detect images port:
 + docker ps
 Replace PORT (first 3 letters) by the image port and open Rstudio to make changes and next quit:
-+ docker exec -it 31d /bin/launch.sh
-Commit changes:
++ docker exec -it 31d launch.sh
+Save changes:
 + docker commit 31d new_name
 Stop image:
 + docker stop 31d
