@@ -24,7 +24,7 @@ Git allows to manage versions of your projects.
 + Save files in LinkFile when you are working in the container.
 
 
-### Launch image (could take a while for packages loading):   
+### Launch image (could take a while for packages loading, more if you are not online):   
 ####For linux:  
 + xhost local:root # To correct bug for ubuntu X11
 + docker run -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY famjean/dock_n_roll:UBUNTU.16.04.5_R.3.5.1_MRAN.2018-12-20   
@@ -50,16 +50,17 @@ See [example](https://www.r-bloggers.com/running-your-r-script-in-docker/amp/) o
 ***
 ## Commit changes in image
 Launch:
-+ docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY famjean/dock_n_roll:UBUNTU.16.04.5_R.3.5.1_MRAN.2018-12-20 bash    
-Detect images port:
-+ docker ps
-Replace PORT (first 3 letters) by the image port and open Rstudio to make changes and next quit:
-+ docker exec -it 31d launch.sh
-Save changes:
-+ docker commit 31d new_name
-Stop image:
-+ docker stop 31d
-
+```bash
+docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY famjean/dock_n_roll:UBUNTU.16.04.5_R.3.5.1_MRAN.2018-12-20 bash    
+#Detect images port:
+docker ps
+#Replace PORT (first 3 letters) by the image port and open Rstudio to make changes and next quit:
+docker exec -it 31d launch.sh
+#Save changes:
+docker commit 31d new_name
+#Stop image:
+docker stop 31d
+```
 ***
 ## Generate image from Dockerfile
 + Put you in the file with Dockerfile and other files (use cd or equivalent).

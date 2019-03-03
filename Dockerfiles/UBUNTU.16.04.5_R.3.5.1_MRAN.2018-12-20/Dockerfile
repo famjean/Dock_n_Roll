@@ -123,8 +123,9 @@ LABEL OS="ubuntu xenial 16.04.5" \
 
 # Launching
 #----------
-# Set wd
+# Create files and set wd
 RUN mkdir -p /home/LinkFile
+RUN mkdir -p /home/Gits
 WORKDIR /home
 
 # packages

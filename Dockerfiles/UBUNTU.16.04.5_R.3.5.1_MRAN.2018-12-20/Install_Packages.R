@@ -51,6 +51,6 @@ load.packages(
 "rmarkdown", "knitr", "citr",
 "pander", "officer", "xtable", "flextable",
 "grid", "png", "cowplot","scales",
-"openxlsx", "crayon"
+"openxlsx", "crayon",
 load = FALSE
 )
