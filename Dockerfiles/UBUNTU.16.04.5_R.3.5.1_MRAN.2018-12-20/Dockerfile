@@ -45,7 +45,7 @@ RUN apt-get install -y --no-install-recommends \
                     libssl-dev littler g++ build-essential libgtk2.0-dev libicu-dev \
                     libbz2-dev liblzma-dev zlib1g-dev libopencv-features2d-dev lib32z1-dev \
                     zlib* libblas-dev liblapack-dev libgsl0-dev libudunits2-dev libglu1-mesa-dev \
-                    libnlopt-dev libmagick++-dev
+                    libnlopt-dev libmagick++-dev libperl-dev gfortran
 
 # Install java
 RUN apt-get install -y --no-install-recommends \
@@ -56,6 +56,8 @@ RUN apt-get install -y --no-install-recommends \
 # Install git
 RUN apt-get install -y --no-install-recommends \
                     git
+RUN git config --global user.email "you@example.com"
+RUN git config --global user.name "Your Name"
 
 # Install Latex and pandoc
 RUN apt-get install -y --no-install-recommends \
@@ -70,6 +72,12 @@ RUN apt-get install -y --no-install-recommends \
 RUN wget https://github.com/jgm/pandoc/releases/download/2.6/pandoc-2.6-1-amd64.deb
 RUN gdebi -n *.deb
 RUN rm *.deb
+
+# install evince, libreoffice and ristretto to read rmarkdown output
+RUN apt-get install -y --no-install-recommends \
+                    evince \
+                    libreoffice \
+                    ristretto
 
 # Install R and Rstudio
 #----------------------

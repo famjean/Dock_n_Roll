@@ -46,6 +46,7 @@ load.packages <- function( PackagesNames, ...,
 
 # load packages
 load.packages(
+"lme4",
 "tidyverse", "lubridate", "forcats", "stringr",
 "magrittr",
 "rmarkdown", "knitr", "citr",
