@@ -46,10 +46,10 @@ load.packages <- function( PackagesNames, ...,
 
 # load packages
 load.packages(
-"lme4",
+"lme4", "packrat",
 "tidyverse", "lubridate", "forcats", "stringr",
 "magrittr",
-"rmarkdown", "knitr", "citr",
+"rmarkdown", "knitr", "citr", "caTools", "bitops", "rprojroot",
 "pander", "officer", "xtable", "flextable",
 "grid", "png", "cowplot","scales",
 "openxlsx", "crayon",

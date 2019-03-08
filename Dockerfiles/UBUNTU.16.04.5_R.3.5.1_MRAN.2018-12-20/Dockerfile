@@ -65,6 +65,7 @@ RUN apt-get install -y --no-install-recommends \
                     texlive-base \
                     texlive-latex-extra \
                     texlive-pstricks \
+                    lmodern \
                     pandoc \
                     pandoc-citeproc
 
@@ -77,7 +78,8 @@ RUN rm *.deb
 RUN apt-get install -y --no-install-recommends \
                     evince \
                     libreoffice \
-                    ristretto
+                    ristretto \
+                    tumbler
 
 # Install R and Rstudio
 #----------------------

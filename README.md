@@ -68,7 +68,7 @@ docker commit 31d new_name
 #Stop image:
 docker stop 31d
 #Relaunch
-docker run -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY new_name 
+docker run -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY new_name launch.sh
 ```
 
 ***
