@@ -83,6 +83,5 @@ docker build -t famjean/dock_n_roll:UBUNTU.16.04.5_R.3.5.1_MRAN.2018-12-20 .
 Fill free to report bugs and difficulties in Issues.
 
 ***
-***
 ## Known Issues
 + lme4 is pre-installed beceause an issue in installing minqa dependancy when open message is activated. So, just require(lme4) and do not install it.
