@@ -1,5 +1,5 @@
 # Dock_n_Roll  
-Get stable versions of R, R packages, Rstudio, Git and Latex with graphical user interface through X11 socket mounting on a docker container and checkpoint.
+Get stable versions of R, R packages, Rstudio, Git and Latex with graphical user interface through X11 socket mounting on a docker container and checkpoint R package.
 
 ***   
 
@@ -28,13 +28,13 @@ Git allows to manage versions of your projects.
 ####For linux:
 ```bash
 xhost local:root # To correct bug for ubuntu X11
-docker run -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY famjean/dock_n_roll:UBUNTU.16.04.5_R.3.5.1_MRAN.2018-12-20   
+docker run -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY famjean/dock_n_roll  
 ```
 
 #### For windows:  
 ```bash
 xming :0 -ac -clipboard -multiwindow   
-docker run -it -e DISPLAY=hostip:0   -v c:/Users/Desktop/LinkFile:/home/LinkFile famjean/dock_n_roll:UBUNTU.16.04.5_R.3.5.1_MRAN.2018-12-20
+docker run -it -e DISPLAY=hostip:0   -v c:/Users/Desktop/LinkFile:/home/LinkFile famjean/dock_n_roll
 ```
 
 #### For macos:  
@@ -43,7 +43,7 @@ brew install socat
 brew cask install xquartz   
 open -a XQuartz  
 socat TCP-LISTEN:6000,reuseaddr,fork UNIX-CLIENT:\"$DISPLAY\"   
-docker run -it -e DISPLAY=hostip:0 -v ~/Desktop/LinkFile:/home/LinkFile famjean/dock_n_roll:UBUNTU.16.04.5_R.3.5.1_MRAN.2018-12-20   
+docker run -it -e DISPLAY=hostip:0 -v ~/Desktop/LinkFile:/home/LinkFile famjean/dock_n_roll
 ```
 
 ### More:
@@ -58,7 +58,7 @@ See [example](https://www.r-bloggers.com/running-your-r-script-in-docker/amp/) o
 ```bash
 #Launch:
 xhost local:root
-docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY famjean/dock_n_roll:UBUNTU.16.04.5_R.3.5.1_MRAN.2018-12-20 bash    
+docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY famjean/dock_n_roll bash    
 #Detect images port:
 docker ps
 #Replace PORT (first 3 letters) by the image port and open Rstudio to make changes and next quit:
@@ -72,10 +72,14 @@ docker run -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-
 ```
 
 ***
-## Generate image from Dockerfile
+## Generate image from Dockerfile and save it
 ```bash
 #Put you in the file with Dockerfile and other files (use cd or equivalent).
-docker build -t famjean/dock_n_roll:UBUNTU.16.04.5_R.3.5.1_MRAN.2018-12-20 .
+docker build -t famjean/dock_n_roll:latest -t famjean/dock_n_roll:UBUNTU.16.04.5_R.3.5.1_MRAN.2018-12-20 .
+#Save image
+docker save famjean/dock_n_roll:UBUNTU.16.04.5_R.3.5.1_MRAN.2018-12-20 | gzip > UBUNTU.16.04.5_R.3.5.1_MRAN.2018-12-20.tar.gz
+#Load image
+zcat UBUNTU.16.04.5_R.3.5.1_MRAN.2018-12-20.tar.gz | docker import
 ```
 
 ***
