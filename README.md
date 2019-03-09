@@ -62,11 +62,11 @@ docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X
 #Detect images port:
 docker ps
 #Replace PORT (first 3 letters) by the image port and open Rstudio to make changes and next quit:
-docker exec -it 31d launch.sh
+docker exec -it PORT launch.sh
 #Save changes:
-docker commit 31d new_name
+docker commit PORT new_name
 #Stop image:
-docker stop 31d
+docker stop PORT
 #Relaunch
 docker run -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY new_name launch.sh
 ```
@@ -77,9 +77,9 @@ docker run -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-
 #Put you in the file with Dockerfile and other files (use cd or equivalent).
 docker build -t famjean/dock_n_roll:latest -t famjean/dock_n_roll:UBUNTU.16.04.5_R.3.5.1_MRAN.2018-12-20 .
 #Save image
-docker save famjean/dock_n_roll:UBUNTU.16.04.5_R.3.5.1_MRAN.2018-12-20 | gzip > UBUNTU.16.04.5_R.3.5.1_MRAN.2018-12-20.tar.gz
+docker save famjean/dock_n_roll:UBUNTU.16.04.5_R.3.5.1_MRAN.2018-12-20 | gzip > UBUNTU.16.04.5_R.3.5.1_MRAN.2018-12-20.tgz
 #Load image
-zcat UBUNTU.16.04.5_R.3.5.1_MRAN.2018-12-20.tar.gz | docker import
+gunzip -c UBUNTU.16.04.5_R.3.5.1_MRAN.2018-12-20.tgz | docker load
 ```
 
 ***
