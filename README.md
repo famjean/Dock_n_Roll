@@ -58,7 +58,7 @@ See [example](https://www.r-bloggers.com/running-your-r-script-in-docker/amp/) o
 ```bash
 #Launch:
 xhost local:root
-docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY famjean/dock_n_roll bash    
+docker run -d -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY famjean/dock_n_roll bash    
 #Detect images port:
 docker ps
 #Replace PORT (first 3 letters) by the image port and open Rstudio to make changes and next quit:
@@ -75,9 +75,11 @@ docker run -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-
 ## Generate image from Dockerfile and save it
 ```bash
 #Put you in the file with Dockerfile and other files (use cd or equivalent).
-docker build -t famjean/dock_n_roll:latest -t famjean/dock_n_roll:UBUNTU.16.04.5_R.3.5.1_MRAN.2018-12-20 .
+docker build -t famjean/dock_n_roll:latest -t famjean/dock_n_roll:latest .
+# tag image
+docker tag d61 famjean/dock_n_roll:UBUNTU.16.04.6_R.3.5.3_MRAN.2019-03-11
 #Save image
-docker save famjean/dock_n_roll:UBUNTU.16.04.5_R.3.5.1_MRAN.2018-12-20 | gzip > UBUNTU.16.04.5_R.3.5.1_MRAN.2018-12-20.tgz
+docker save famjean/dock_n_roll:latest | gzip > UBUNTU.16.04.6_R.3.5.3_MRAN.2019-03-11.tgz
 #Load image
 gunzip -c UBUNTU.16.04.5_R.3.5.1_MRAN.2018-12-20.tgz | docker load
 ```
