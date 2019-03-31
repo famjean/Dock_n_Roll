@@ -21,14 +21,13 @@ Git allows to manage versions of your projects.
 + install docker (for windows xming in addition and for macos socat and xquartz in addition)
 + Create on your Desktop an LinkFile file. It will be connected with the same file inside your container.
 + Put file in LinkFile before working with container.  
-+ Save files in LinkFile when you are working in the container.
-
++ Save files in LinkFile when you are working in the container.   
 
 ### Launch image (could take a while for packages loading, more if you are not online):   
 ####For linux:
 ```bash
 xhost local:root # To correct bug for ubuntu X11
-docker run -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY famjean/dock_n_roll  
+docker run -it -v ~/Desktop/LinkFile:/home/LinkFile  -v ~/OneDrive13/Git:/home/Gits  -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY famjean/dock_n_roll  
 ```
 
 #### For windows:  
@@ -56,19 +55,12 @@ See [example](https://www.r-bloggers.com/running-your-r-script-in-docker/amp/) o
 ***
 ## Commit changes in image   
 ```bash
+# Before launching, be sure that no images with the same name is running with docker ps
 #Launch:
-xhost local:root
-docker run -d -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY famjean/dock_n_roll bash    
-#Detect images port:
-docker ps
-#Replace PORT (first 3 letters) by the image port and open Rstudio to make changes and next quit:
-docker exec -it PORT launch.sh
-#Save changes:
-docker commit PORT new_name
-#Stop image:
-docker stop PORT
+xhost local:root # for linux
+docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY famjean/dock_n_roll bash && NUMIMAGE=`docker ps |  grep "famjean" | tr "        " "\n" | sed -n '1p'` && docker exec -it $NUMIMAGE launch.sh && docker commit $NUMIMAGE new_name && docker stop $NUMIMAGE
 #Relaunch
-docker run -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY new_name launch.sh
+docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY new_name bash && NUMIMAGE=`docker ps |  grep "new_name" | tr "        " "\n" | sed -n '1p'` && docker exec -it $NUMIMAGE launch.sh && docker commit $NUMIMAGE new_name && docker stop $NUMIMAGE
 ```
 
 ***

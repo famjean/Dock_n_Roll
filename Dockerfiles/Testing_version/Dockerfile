@@ -60,6 +60,10 @@ RUN apt-get install -y --no-install-recommends \
 RUN git config --global user.email "you@example.com"
 RUN git config --global user.name "Your Name"
 
+# Install ssh
+RUN apt-get install -y --no-install-recommends \
+                    openssh-server
+
 # Install Latex and pandoc
 RUN apt-get install -y --no-install-recommends \
                     texlive \
