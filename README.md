@@ -64,7 +64,8 @@ docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X
 docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY roll_r bash && NUMIMAGE=`docker ps |  grep "roll_r" | tr "        " "\n" | sed -n '1p'` && docker exec -it $NUMIMAGE launch.sh && docker commit $NUMIMAGE roll_r && docker stop $NUMIMAGE
 
 # For linux users: create an executable script launchable in alt + F2
-echo 'docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY roll_r bash && NUMIMAGE=`docker ps |  grep "roll_r" | tr "        " "\n" | sed -n '1p'` && docker exec -it $NUMIMAGE launch.sh && docker commit $NUMIMAGE roll_r && docker stop $NUMIMAGE' > ~/roll_r
+echo '#!/bin/bash
+docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY roll_r bash && NUMIMAGE=`docker ps |  grep "roll_r" | tr "        " "\n" | sed -n '1p'` && docker exec -it $NUMIMAGE launch.sh && docker commit $NUMIMAGE roll_r && docker stop $NUMIMAGE' > ~/roll_r
 sudo chmod 777 ~/roll_r && sudo cp ~/roll_r /usr/local/bin/ && rm ~/roll_r
 
 # To launch
@@ -95,3 +96,12 @@ Fill free to report bugs and difficulties in Issues.
 ***
 ## Known Issues
 + lme4 is pre-installed because of an issue in installing minqa dependency when the open message is activated. So, just require(lme4) and do not install it.
++ shortcut is not running
+echo '[Desktop Entry] Version=1.0
+Type=Application
+Terminal=false
+Name=Roll R
+Exec=/usr/local/bin/roll_r
+Icon=rlogo_icon
+Categories=Application;' > ~/roll_r.desktop
+sudo cp ~/roll_r.desktop /usr/share/applications/roll_r.desktop && rm  ~/roll_r.desktop
