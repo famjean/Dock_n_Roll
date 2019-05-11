@@ -1,5 +1,5 @@
 # Dock_n_Roll  
-Get stable versions of R, R packages, Rstudio, Git and Latex with graphical user interface through X11 socket mounting on a docker container and checkpoint R package.
+Get stable versions of R, R packages, Rstudio, Git and Latex with a graphical user interface through X11 socket mounting on a docker container and checkpoint R package.
 
 ***   
 
@@ -11,23 +11,23 @@ This project contains scripts and indications to create and run a docker contain
 
 For the R packages stability we used in addition of the checkpoint package (Microsoft Corporation (2018). checkpoint: Install Packages from Snapshots on the Checkpoint Server for Reproducibility. https://CRAN.R-project.org/package=checkpoint) to fix packages to date of release of R version. Hence your analysis will be perfectly replicable.
 
-Pandoc and Latex are provided to permit use of Rmarkdown to create reports.
+Pandoc and Latex are provided to permit the use of Rmarkdown to create reports.
 
-Git allows to manage versions of your projects.
+Git allows managing versions of your projects.
 
 ***
 ## How to use
 ### Install
 + install docker (for windows xming in addition and for macos socat and xquartz in addition)
-+ Create on your Desktop an LinkFile file. It will be connected with the same file inside your container.
-+ Put file in LinkFile before working with container.  
++ Create on your Desktop and LinkFile file. It will be connected with the same file inside your container.
++ Put the file in LinkFile before working with a container.  
 + Save files in LinkFile when you are working in the container.   
 
 ### Launch image (could take a while for packages loading, more if you are not online):   
 ####For linux:
 ```bash
 xhost local:root # To correct bug for ubuntu X11
-docker run -it -v ~/Desktop/LinkFile:/home/LinkFile  -v ~/OneDrive13/Git:/home/Gits  -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY famjean/dock_n_roll  
+docker run -it -v ~/Desktop/LinkFile:/home/LinkFile  -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY famjean/dock_n_roll  
 ```
 
 #### For windows:  
@@ -58,22 +58,34 @@ See [example](https://www.r-bloggers.com/running-your-r-script-in-docker/amp/) o
 # Before launching, be sure that no images with the same name is running with docker ps
 #Launch:
 xhost local:root # for linux
-docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY famjean/dock_n_roll bash && NUMIMAGE=`docker ps |  grep "famjean" | tr "        " "\n" | sed -n '1p'` && docker exec -it $NUMIMAGE launch.sh && docker commit $NUMIMAGE new_name && docker stop $NUMIMAGE
+docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY famjean/dock_n_roll bash && NUMIMAGE=`docker ps |  grep "dock_n_roll" | tr "        " "\n" | sed -n '1p'` && docker exec -it $NUMIMAGE launch.sh && docker commit $NUMIMAGE roll_r && docker stop $NUMIMAGE
+
 #Relaunch
-docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY new_name bash && NUMIMAGE=`docker ps |  grep "new_name" | tr "        " "\n" | sed -n '1p'` && docker exec -it $NUMIMAGE launch.sh && docker commit $NUMIMAGE new_name && docker stop $NUMIMAGE
+docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY roll_r bash && NUMIMAGE=`docker ps |  grep "roll_r" | tr "        " "\n" | sed -n '1p'` && docker exec -it $NUMIMAGE launch.sh && docker commit $NUMIMAGE roll_r && docker stop $NUMIMAGE
+
+# For linux users: create an executable script launchable in alt + F2
+echo 'docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY roll_r bash && NUMIMAGE=`docker ps |  grep "roll_r" | tr "        " "\n" | sed -n '1p'` && docker exec -it $NUMIMAGE launch.sh && docker commit $NUMIMAGE roll_r && docker stop $NUMIMAGE' > ~/roll_r
+sudo chmod 777 ~/roll_r && sudo cp ~/roll_r /usr/local/bin/ && rm ~/roll_r
+
+# To launch
+roll_r
 ```
 
 ***
 ## Generate image from Dockerfile and save it
 ```bash
+# see last ubuntu version
+docker run ubuntu:xenial cat /etc/issue
 #Put you in the file with Dockerfile and other files (use cd or equivalent).
-docker build -t famjean/dock_n_roll:latest -t famjean/dock_n_roll:latest .
+docker build -t famjean/dock_n_roll:latest .
 # tag image
-docker tag d61 famjean/dock_n_roll:UBUNTU.16.04.6_R.3.5.3_MRAN.2019-03-11
+docker images
+NUMIMAGE=`docker images |  grep "dock_n_roll" | grep "latest" | tr "              " "\n" | sed -n '18p'`
+docker tag $NUMIMAGE famjean/dock_n_roll:UBUNTU.16.04.6_R.3.6.0_MRAN.2019-04-26
 #Save image
-docker save famjean/dock_n_roll:latest | gzip > UBUNTU.16.04.6_R.3.5.3_MRAN.2019-03-11.tgz
+docker save famjean/dock_n_roll:latest | gzip > UBUNTU.16.04.6_R.3.6.0_MRAN.2019-04-26.tgz
 #Load image
-gunzip -c UBUNTU.16.04.5_R.3.5.1_MRAN.2018-12-20.tgz | docker load
+gunzip -c UBUNTU.16.04.6_R.3.6.0_MRAN.2019-04-26.tgz | docker load
 ```
 
 ***
@@ -82,4 +94,4 @@ Fill free to report bugs and difficulties in Issues.
 
 ***
 ## Known Issues
-+ lme4 is pre-installed beceause an issue in installing minqa dependancy when open message is activated. So, just require(lme4) and do not install it.
++ lme4 is pre-installed because of an issue in installing minqa dependency when the open message is activated. So, just require(lme4) and do not install it.
