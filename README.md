@@ -65,6 +65,7 @@ docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X
 
 # For linux users: create an executable script launchable in alt + F2
 echo '#!/bin/bash
+xhost local:root
 docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY roll_r bash && NUMIMAGE=`docker ps |  grep "roll_r" | tr "        " "\n" | sed -n '1p'` && docker exec -it $NUMIMAGE launch.sh && docker commit $NUMIMAGE roll_r && docker stop $NUMIMAGE' > ~/roll_r
 sudo chmod 777 ~/roll_r && sudo cp ~/roll_r /usr/local/bin/ && rm ~/roll_r
 
