@@ -58,19 +58,21 @@ See [example](https://www.r-bloggers.com/running-your-r-script-in-docker/amp/) o
 # Before launching, be sure that no images with the same name is running with docker ps
 #Launch:
 xhost local:root # for linux
-docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY famjean/dock_n_roll bash && NUMIMAGE=`docker ps |  grep "dock_n_roll" | tr "        " "\n" | sed -n '1p'` && docker exec -it $NUMIMAGE launch.sh && docker commit $NUMIMAGE roll_r && docker stop $NUMIMAGE
+NAMEROLLR="roll_r360"
+docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY famjean/dock_n_roll bash && NUMIMAGE=`docker ps |  grep "dock_n_roll" | tr "        " "\n" | sed -n '1p'` && docker exec -it $NUMIMAGE launch.sh && docker commit $NUMIMAGE $NAMEROLLR && docker stop $NUMIMAGE
 
 #Relaunch
-docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY roll_r bash && NUMIMAGE=`docker ps |  grep "roll_r" | tr "        " "\n" | sed -n '1p'` && docker exec -it $NUMIMAGE launch.sh && docker commit $NUMIMAGE roll_r && docker stop $NUMIMAGE
+docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY $NAMEROLLR bash && NUMIMAGE=`docker ps |  grep "roll_r" | tr "        " "\n" | sed -n '1p'` && docker exec -it $NUMIMAGE launch.sh && docker commit $NUMIMAGE $NAMEROLLR && docker stop $NUMIMAGE
 
 # For linux users: create an executable script launchable in alt + F2
 echo '#!/bin/bash
 xhost local:root
-docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY roll_r bash && NUMIMAGE=`docker ps |  grep "roll_r" | tr "        " "\n" | sed -n '1p'` && docker exec -it $NUMIMAGE launch.sh && docker commit $NUMIMAGE roll_r && docker stop $NUMIMAGE' > ~/roll_r
-sudo chmod 777 ~/roll_r && sudo cp ~/roll_r /usr/local/bin/ && rm ~/roll_r
+NAMEROLLR="roll_r360"
+docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY $NAMEROLLR bash && NUMIMAGE=`docker ps |  grep "roll_r" | tr "        " "\n" | sed -n '1p'` && docker exec -it $NUMIMAGE launch.sh && docker commit $NUMIMAGE $NAMEROLLR && docker stop $NUMIMAGE' > ~/$NAMEROLLR
+sudo chmod 777 ~/$NAMEROLLR && sudo cp ~/$NAMEROLLR /usr/local/bin/ && rm ~/$NAMEROLLR
 
 # To launch
-roll_r
+roll_r360
 ```
 
 ***
