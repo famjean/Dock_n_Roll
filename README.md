@@ -64,15 +64,24 @@ docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X
 #Relaunch
 docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY $NAMEROLLR bash && NUMIMAGE=`docker ps |  grep "roll_r" | tr "        " "\n" | sed -n '1p'` && docker exec -it $NUMIMAGE launch.sh && docker commit $NUMIMAGE $NAMEROLLR && docker stop $NUMIMAGE
 
-# For linux users: create an executable script launchable in alt + F2
+# For linux users: create an executable script launchable and a shortcut for the menu
 echo '#!/bin/bash
 xhost local:root
 NAMEROLLR="roll_r360"
 docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY $NAMEROLLR bash && NUMIMAGE=`docker ps |  grep "roll_r" | tr "        " "\n" | sed -n '1p'` && docker exec -it $NUMIMAGE launch.sh && docker commit $NUMIMAGE $NAMEROLLR && docker stop $NUMIMAGE' > ~/$NAMEROLLR
 sudo chmod 777 ~/$NAMEROLLR && sudo cp ~/$NAMEROLLR /usr/local/bin/ && rm ~/$NAMEROLLR
+echo '[Desktop Entry] Version=1.0
+Type=Application
+Terminal=true
+Name=Roll R
+Exec=/usr/local/bin/roll_r
+Icon=rlogo_icon
+Categories=Application;' > ~/$NAMEROLLR.desktop
+sudo cp ~/$NAMEROLLR.desktop /usr/share/applications/$NAMEROLLR.desktop && rm  ~/$NAMEROLLR.desktop
 
 # To launch
 roll_r360
+# or go to the launcher
 ```
 
 ***
@@ -99,12 +108,3 @@ Fill free to report bugs and difficulties in Issues.
 ***
 ## Known Issues
 + lme4 is pre-installed because of an issue in installing minqa dependency when the open message is activated. So, just require(lme4) and do not install it.
-+ shortcut is not running
-echo '[Desktop Entry] Version=1.0
-Type=Application
-Terminal=false
-Name=Roll R
-Exec=/usr/local/bin/roll_r
-Icon=rlogo_icon
-Categories=Application;' > ~/roll_r.desktop
-sudo cp ~/roll_r.desktop /usr/share/applications/roll_r.desktop && rm  ~/roll_r.desktop
