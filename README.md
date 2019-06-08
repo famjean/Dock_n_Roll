@@ -73,7 +73,7 @@ sudo chmod 777 ~/$NAMEROLLR && sudo cp ~/$NAMEROLLR /usr/local/bin/ && rm ~/$NAM
 echo '[Desktop Entry] Version=1.0
 Type=Application
 Terminal=true
-Name=Roll R
+Name="Roll R360"
 Exec=/usr/local/bin/roll_r
 Icon=rlogo_icon
 Categories=Application;' > ~/$NAMEROLLR.desktop
