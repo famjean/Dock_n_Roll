@@ -135,7 +135,7 @@ RUN apt-get install --reinstall libxcb-xinerama0
 
 # Label
 #------
-MAINTAINER "François A.M. Jean francois.jean.pro@gmx.com"
+MAINTAINER "François A.M Jean francois.jean.pro@gmx.com"
 LABEL OS="ubuntu xenial 16.04.6" \
       R="R 3.6.1" \
       MRAN="2019.07.05"
