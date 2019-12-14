@@ -58,29 +58,29 @@ See [example](https://www.r-bloggers.com/running-your-r-script-in-docker/amp/) o
 # Before launching, be sure that no images with the same name is running with docker ps
 #Launch:
 xhost local:root # for linux
-NAMEROLLR="roll_r361"
+NAMEROLLR="roll_r362"
 docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY famjean/dock_n_roll bash && NUMIMAGE=`docker ps |  grep "dock_n_roll" | tr "        " "\n" | sed -n '1p'` && docker exec -it $NUMIMAGE launch.sh && docker commit $NUMIMAGE $NAMEROLLR && docker stop $NUMIMAGE
 
 #Relaunch
-docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY $NAMEROLLR bash && NUMIMAGE=`docker ps |  grep "roll_r361" | tr "        " "\n" | sed -n '1p'` && docker exec -it $NUMIMAGE launch.sh && docker commit $NUMIMAGE $NAMEROLLR && docker stop $NUMIMAGE
+docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY $NAMEROLLR bash && NUMIMAGE=`docker ps |  grep "roll_r362" | tr "        " "\n" | sed -n '1p'` && docker exec -it $NUMIMAGE launch.sh && docker commit $NUMIMAGE $NAMEROLLR && docker stop $NUMIMAGE
 
 # For linux users: create an executable script launchable and a shortcut for the menu
 echo '#!/bin/bash
 xhost local:root
-NAMEROLLR="roll_r361"
-docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY $NAMEROLLR bash && NUMIMAGE=`docker ps |  grep "roll_r361" | tr "        " "\n" | sed -n '1p'` && docker exec -it $NUMIMAGE launch.sh && docker commit $NUMIMAGE $NAMEROLLR && docker stop $NUMIMAGE' > ~/$NAMEROLLR
+NAMEROLLR="roll_r362"
+docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY $NAMEROLLR bash && NUMIMAGE=`docker ps |  grep "roll_r362" | tr "        " "\n" | sed -n '1p'` && docker exec -it $NUMIMAGE launch.sh && docker commit $NUMIMAGE $NAMEROLLR && docker stop $NUMIMAGE' > ~/$NAMEROLLR
 sudo chmod 777 ~/$NAMEROLLR && sudo cp ~/$NAMEROLLR /usr/local/bin/ && rm ~/$NAMEROLLR
 echo '[Desktop Entry] Version=1.0
 Type=Application
 Terminal=true
 Name=Roll R361
-Exec=/usr/local/bin/roll_r361
+Exec=/usr/local/bin/roll_r362
 Icon=rlogo_icon
 Categories=Application;' > ~/$NAMEROLLR.desktop
 sudo cp ~/$NAMEROLLR.desktop /usr/share/applications/$NAMEROLLR.desktop && rm  ~/$NAMEROLLR.desktop
 
 # To launch
-roll_r361
+roll_r362
 # or go to the launcher
 ```
 
@@ -88,17 +88,17 @@ roll_r361
 ## Generate image from Dockerfile and save it
 ```bash
 # see last ubuntu version
-docker run ubuntu:xenial cat /etc/issue
+docker run ubuntu:bionic cat /etc/issue
 #Put you in the file with Dockerfile and other files (use cd or equivalent).
 docker build -t famjean/dock_n_roll:latest .
 # tag image
 docker images
 NUMIMAGE=`docker images |  grep "dock_n_roll" | grep "latest" | tr "              " "\n" | sed -n '39p'`
-docker tag $NUMIMAGE famjean/dock_n_roll:UBUNTU.16.04.6_R.3.6.1_MRAN.2019-07-05
+docker tag $NUMIMAGE famjean/dock_n_roll:UBUNTU.18.04.3_R.3.6.2_MRAN.2019-12-12
 #Save image
-docker save famjean/dock_n_roll:latest | gzip > UBUNTU.16.04.6_R.3.6.1_MRAN.2019-07-05.tgz
+docker save famjean/dock_n_roll:latest | gzip > UBUNTU.18.04.3_R.3.6.2_MRAN.2019-12-12.tgz
 #Load image
-gunzip -c UBUNTU.16.04.6_R.3.6.1_MRAN.2019-07-05.tgz | docker load
+gunzip -c UBUNTU.18.04.3_R.3.6.2_MRAN.2019-12-12.tgz | docker load
 ```
 
 ***
@@ -108,3 +108,5 @@ Fill free to report bugs and difficulties in Issues.
 ***
 ## Known Issues
 + lme4 is pre-installed because of an issue in installing minqa dependency when the open message is activated. So, just require(lme4) and do not install it.
+
++ libreoffice is not launched when selecting .docx. You need to open it separetly in terminal with libreoffice command

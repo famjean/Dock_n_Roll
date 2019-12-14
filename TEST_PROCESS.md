@@ -14,8 +14,11 @@
 12/ reopen and check installed package: require(meta) and github
 13/ test command roll_rXXX and shortcut
 14/ save image as archive and pull it on dock hub and valid release
-docker save famjean/dock_n_roll:latest | gzip > UBUNTU.16.04.6_R.3.6.1_MRAN.2019-07-05.tgz
+docker save famjean/dock_n_roll:latest | gzip > UBUNTU.18.04.3_R.3.6.2_MRAN.2019-12-12.tgz
 docker login --username=yourhubusername --password=yourpassword
-docker push famjean/dock_n_roll:latest  
-docker push famjean/dock_n_roll:UBUNTU.16.04.6_R.3.6.1_MRAN.2019-07-05   
+docker push famjean/dock_n_roll:latest
+docker images
+NUMIMAGE=`docker images |  grep "dock_n_roll" | grep "latest" | tr "              " "\n" | sed -n '39p'`
+docker tag $NUMIMAGE famjean/dock_n_roll:UBUNTU.18.04.3_R.3.6.2_MRAN.2019-12-12  
+docker push famjean/dock_n_roll:UBUNTU.18.04.3_R.3.6.2_MRAN.2019-12-12   
 15/ Change the readme on https://hub.docker.com/
