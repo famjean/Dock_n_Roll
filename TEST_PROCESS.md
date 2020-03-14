@@ -1,7 +1,7 @@
 # Test process
 
 1/ launch normal mode: check opening is ok (interface, r customizations, rstudio customizations, mran, versions, keyboard, mouse, wd) and quit
-2/ launch commit mode and
+2/ launch commit mode
 3/ apply write.csv("ee","ee.csv")
 4/ install package: install.packages("meta")
 5/ check if linkfile is ok
@@ -14,11 +14,10 @@
 12/ reopen and check installed package: require(meta) and github
 13/ test command roll_rXXX and shortcut
 14/ save image as archive and pull it on dock hub and valid release
-docker save famjean/dock_n_roll:latest | gzip > UBUNTU.18.04.3_R.3.6.2_MRAN.2019-12-12.tgz
+docker save famjean/dock_n_roll:latest | gzip > UBUNTU.18.04.3_R.3.6.3_MRAN.2020-02-29.tgz
 docker login --username=yourhubusername --password=yourpassword
-docker push famjean/dock_n_roll:latest
 docker images
 NUMIMAGE=`docker images |  grep "dock_n_roll" | grep "latest" | tr "              " "\n" | sed -n '39p'`
-docker tag $NUMIMAGE famjean/dock_n_roll:UBUNTU.18.04.3_R.3.6.2_MRAN.2019-12-12  
-docker push famjean/dock_n_roll:UBUNTU.18.04.3_R.3.6.2_MRAN.2019-12-12   
+docker tag $NUMIMAGE famjean/dock_n_roll:UBUNTU.18.04.3_R.3.6.3_MRAN.2020-02-29  
+docker push famjean/dock_n_roll:latest && docker push famjean/dock_n_roll:UBUNTU.18.04.3_R.3.6.3_MRAN.2020-02-29   
 15/ Change the readme on https://hub.docker.com/

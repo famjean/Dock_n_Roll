@@ -58,29 +58,30 @@ See [example](https://www.r-bloggers.com/running-your-r-script-in-docker/amp/) o
 # Before launching, be sure that no images with the same name is running with docker ps
 #Launch:
 xhost local:root # for linux
-NAMEROLLR="roll_r362"
+NAMEROLLR="roll_r363"
 docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY famjean/dock_n_roll bash && NUMIMAGE=`docker ps |  grep "dock_n_roll" | tr "        " "\n" | sed -n '1p'` && docker exec -it $NUMIMAGE launch.sh && docker commit $NUMIMAGE $NAMEROLLR && docker stop $NUMIMAGE
 
 #Relaunch
-docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY $NAMEROLLR bash && NUMIMAGE=`docker ps |  grep "roll_r362" | tr "        " "\n" | sed -n '1p'` && docker exec -it $NUMIMAGE launch.sh && docker commit $NUMIMAGE $NAMEROLLR && docker stop $NUMIMAGE
+docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY $NAMEROLLR bash && NUMIMAGE=`docker ps |  grep "roll_r363" | tr "        " "\n" | sed -n '1p'` && docker exec -it $NUMIMAGE launch.sh && docker commit $NUMIMAGE $NAMEROLLR && docker stop $NUMIMAGE
 
 # For linux users: create an executable script launchable and a shortcut for the menu
+NAMEROLLR="roll_r363"
 echo '#!/bin/bash
 xhost local:root
-NAMEROLLR="roll_r362"
-docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY $NAMEROLLR bash && NUMIMAGE=`docker ps |  grep "roll_r362" | tr "        " "\n" | sed -n '1p'` && docker exec -it $NUMIMAGE launch.sh && docker commit $NUMIMAGE $NAMEROLLR && docker stop $NUMIMAGE' > ~/$NAMEROLLR
+NAMEROLLR="roll_r363"
+docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY $NAMEROLLR bash && NUMIMAGE=`docker ps |  grep "roll_r363" | tr "        " "\n" | sed -n '1p'` && docker exec -it $NUMIMAGE launch.sh && docker commit $NUMIMAGE $NAMEROLLR && docker stop $NUMIMAGE' > ~/$NAMEROLLR
 sudo chmod 777 ~/$NAMEROLLR && sudo cp ~/$NAMEROLLR /usr/local/bin/ && rm ~/$NAMEROLLR
 echo '[Desktop Entry] Version=1.0
 Type=Application
 Terminal=true
-Name=Roll R361
-Exec=/usr/local/bin/roll_r362
+Name=Roll R363
+Exec=/usr/local/bin/roll_r363
 Icon=rlogo_icon
 Categories=Application;' > ~/$NAMEROLLR.desktop
 sudo cp ~/$NAMEROLLR.desktop /usr/share/applications/$NAMEROLLR.desktop && rm  ~/$NAMEROLLR.desktop
 
 # To launch
-roll_r362
+roll_r363
 # or go to the launcher
 ```
 
@@ -94,11 +95,11 @@ docker build -t famjean/dock_n_roll:latest .
 # tag image
 docker images
 NUMIMAGE=`docker images |  grep "dock_n_roll" | grep "latest" | tr "              " "\n" | sed -n '39p'`
-docker tag $NUMIMAGE famjean/dock_n_roll:UBUNTU.18.04.3_R.3.6.2_MRAN.2019-12-12
+docker tag $NUMIMAGE famjean/dock_n_roll:UBUNTU.18.04.3_R.3.6.3_MRAN.2020-02-29
 #Save image
-docker save famjean/dock_n_roll:latest | gzip > UBUNTU.18.04.3_R.3.6.2_MRAN.2019-12-12.tgz
+docker save famjean/dock_n_roll:latest | gzip > UBUNTU.18.04.3_R.3.6.3_MRAN.2020-02-29.tgz
 #Load image
-gunzip -c UBUNTU.18.04.3_R.3.6.2_MRAN.2019-12-12.tgz | docker load
+gunzip -c UBUNTU.18.04.3_R.3.6.3_MRAN.2020-02-29.tgz | docker load
 ```
 
 ***
