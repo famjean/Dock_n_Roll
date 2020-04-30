@@ -14,10 +14,27 @@
 12/ reopen and check installed package: require(meta) and github
 13/ test command roll_rXXX and shortcut
 14/ save image as archive and pull it on dock hub and valid release
-docker save famjean/dock_n_roll:latest | gzip > UBUNTU.18.04.3_R.3.6.3_MRAN.2020-02-29.tgz
+
+docker save famjean/dock_n_roll:latest | gzip > UBUNTU.18.04.3_R.4.0.0_MRAN.2020-04-24.tgz
+
 docker login --username=yourhubusername --password=yourpassword
+
 docker images
-NUMIMAGE=`docker images |  grep "dock_n_roll" | grep "latest" | tr "              " "\n" | sed -n '39p'`
-docker tag $NUMIMAGE famjean/dock_n_roll:UBUNTU.18.04.3_R.3.6.3_MRAN.2020-02-29  
-docker push famjean/dock_n_roll:latest && docker push famjean/dock_n_roll:UBUNTU.18.04.3_R.3.6.3_MRAN.2020-02-29   
+
+NUMIMAGE=`docker images |  grep "dock_n_roll" | grep "latest" | tr "              " "\n" | sed -n '18p'`
+
+# 18p ou 39p
+
+echo $NUMIMAGE
+
+docker tag $NUMIMAGE famjean/dock_n_roll:UBUNTU.18.04.3_R.4.0.0_MRAN.2020-04-24  
+
+docker images
+
+docker push famjean/dock_n_roll:latest && docker push famjean/dock_n_roll:UBUNTU.18.04.3_R.4.0.0_MRAN.2020-04-24
+
 15/ Change the readme on https://hub.docker.com/
+
+16/ Archive testing file in version file
+
+17/ Git changes
