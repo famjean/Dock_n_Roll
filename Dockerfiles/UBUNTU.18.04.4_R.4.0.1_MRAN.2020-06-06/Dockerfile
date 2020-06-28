@@ -118,7 +118,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
                            build-essential gfortran libpcre2-dev xorg-dev libcurl4-openssl-dev  libbz2-dev texlive-fonts-extra default-jdk curl libpcre2-dev zlib1g-dev
 
-ENV  R_VERSION=4.0.2
+ENV  R_VERSION=4.0.1
 
 RUN curl -O https://cran.rstudio.com/src/base/R-4/R-${R_VERSION}.tar.gz
 
@@ -154,13 +154,13 @@ RUN R --version
 
 # Install Rstudio
 # Go to https://rstudio.com/products/rstudio/download/#download
-#RUN wget http://ftp.de.debian.org/debian/pool/main/g/gstreamer0.10/libgstreamer0.10-0_0.10.36-1.5_amd64.deb
-#RUN gdebi -n *.deb
-#RUN rm *.deb
-#RUN wget http://security.debian.org/debian-security/pool/updates/main/g/gst-plugins-base0.10/libgstreamer-plugins-base0.10-0_0.10.36-2+deb8u2_amd64.deb
-#RUN gdebi -n *.deb
-#RUN rm *.deb
-RUN wget https://download1.rstudio.org/desktop/bionic/amd64/rstudio-1.3.959-amd64.deb
+RUN wget http://ftp.de.debian.org/debian/pool/main/g/gstreamer0.10/libgstreamer0.10-0_0.10.36-1.5_amd64.deb
+RUN gdebi -n *.deb
+RUN rm *.deb
+RUN wget http://security.debian.org/debian-security/pool/updates/main/g/gst-plugins-base0.10/libgstreamer-plugins-base0.10-0_0.10.36-2+deb8u2_amd64.deb
+RUN gdebi -n *.deb
+RUN rm *.deb
+RUN wget http://download1.rstudio.org/rstudio-1.1.463-amd64.deb
 RUN gdebi -n *.deb
 RUN rm *.deb
 
@@ -220,8 +220,8 @@ RUN R --version
 
 MAINTAINER "François A.M. Jean francois.jean.pro@gmx.com"
 LABEL OS="ubuntu bionic 18.04.4" \
-      R="R 4.0.2" \
-      MRAN="2020.06.22"
+      R="R 4.0.1" \
+      MRAN="2020.06.06"
 
 # Set default start application (script needed beceause bug on QT5 keybord sharing)
 CMD /bin/launch.sh
