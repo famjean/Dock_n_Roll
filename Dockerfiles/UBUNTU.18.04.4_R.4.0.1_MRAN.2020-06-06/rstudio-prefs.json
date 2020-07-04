@@ -1,0 +1,31 @@
+{
+    "panes": {
+        "quadrants": [
+            "Source",
+            "TabSet1",
+            "Console",
+            "TabSet2"
+        ],
+        "tabSet1": [
+            "Files",
+            "Packages",
+            "VCS",
+            "Presentation"
+        ],
+        "tabSet2": [
+            "Environment",
+            "History",
+            "Plots",
+            "Connections",
+            "Help",
+            "Build",
+            "Tutorial",
+            "Viewer"
+        ],
+        "console_left_on_top": false,
+        "console_right_on_top": true
+    },
+    "editor_theme": "Vibrant Ink",
+    "posix_terminal_shell": "bash",
+    "default_sweave_engine": "knitr"
+}

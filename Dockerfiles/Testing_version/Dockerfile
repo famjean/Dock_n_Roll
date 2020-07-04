@@ -118,7 +118,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
                            build-essential gfortran libpcre2-dev xorg-dev libcurl4-openssl-dev  libbz2-dev texlive-fonts-extra default-jdk curl libpcre2-dev zlib1g-dev
 
-ENV  R_VERSION=4.0.2
+ENV  R_VERSION=4.0.1
 
 RUN curl -O https://cran.rstudio.com/src/base/R-4/R-${R_VERSION}.tar.gz
 
@@ -134,7 +134,7 @@ RUN bash ./configure \
     --with-blas \
     --with-lapack \
     --with-readline=no \
-    --with-x=no
+    --with-x=yes
 
 RUN make
 
@@ -160,8 +160,11 @@ RUN R --version
 #RUN wget http://security.debian.org/debian-security/pool/updates/main/g/gst-plugins-base0.10/libgstreamer-plugins-base0.10-0_0.10.36-2+deb8u2_amd64.deb
 #RUN gdebi -n *.deb
 #RUN rm *.deb
+
 RUN wget https://download1.rstudio.org/desktop/bionic/amd64/rstudio-1.3.959-amd64.deb
+
 RUN gdebi -n *.deb
+
 RUN rm *.deb
 
 # Config R
@@ -175,12 +178,25 @@ COPY Install_Packages.R Install_Packages.R
 RUN Rscript Install_Packages.R
 
 # rstudio preferences
-RUN mkdir -p /root/.rstudio-desktop/monitored/user-settings
-COPY user-settings /root/.rstudio-desktop/monitored/user-settings/user-settings
+RUN mkdir /etc/rstudio
+COPY rstudio-prefs.json /etc/rstudio/rstudio-prefs.json
+RUN mkdir ~/.config
+RUN mkdir ~/.config/rstudio
+#COPY rstudio-prefs.json ~/.config/rstudio/rstudio-prefs.json
+RUN mkdir ~/.config/rstudio/dictionaries
+COPY languages-system.tar.gz languages-system.tar.gz
+RUN tar -xzvf languages-system.tar.gz -C ~/.config/rstudio/dictionaries/
+RUN rm -R languages-system.tar.gz
+
+#RUN mkdir -p /root/.rstudio-desktop/monitored/user-settings
+#COPY user-settings /root/.rstudio-desktop/monitored/user-settings/user-settings
 
 # the default packages for everyone running R
-#COPY Rprofile.site /etc/R/Rprofile.site
-COPY Rprofile.site /home/.Rprofile
+#COPY Rprofile.site /home/.Rprofile
+
+COPY Rprofile.site /etc/R/Rprofile.site
+
+COPY Rprofile.site /opt/R/${R_VERSION}/lib/R/etc/Rprofile.site
 
 # Cleaning
 #---------
@@ -192,6 +208,7 @@ RUN apt-get update -y
 # packges for X11 sharing
 RUN apt-get install -y --no-install-recommends \
                   libxslt-dev
+
 # correct bug on qt
 RUN apt-get install -y libqt5x11extras5
 RUN apt-get install --reinstall libxcb-xinerama0
@@ -220,8 +237,8 @@ RUN R --version
 
 MAINTAINER "François A.M. Jean francois.jean.pro@gmx.com"
 LABEL OS="ubuntu bionic 18.04.4" \
-      R="R 4.0.2" \
-      MRAN="2020.06.22"
+      R="R 4.0.1" \
+      MRAN="2020.06.06"
 
 # Set default start application (script needed beceause bug on QT5 keybord sharing)
 CMD /bin/launch.sh

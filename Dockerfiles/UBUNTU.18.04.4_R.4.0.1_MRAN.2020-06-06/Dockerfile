@@ -134,7 +134,7 @@ RUN bash ./configure \
     --with-blas \
     --with-lapack \
     --with-readline=no \
-    --with-x=no
+    --with-x=yes
 
 RUN make
 
@@ -154,14 +154,17 @@ RUN R --version
 
 # Install Rstudio
 # Go to https://rstudio.com/products/rstudio/download/#download
-RUN wget http://ftp.de.debian.org/debian/pool/main/g/gstreamer0.10/libgstreamer0.10-0_0.10.36-1.5_amd64.deb
+#RUN wget http://ftp.de.debian.org/debian/pool/main/g/gstreamer0.10/libgstreamer0.10-0_0.10.36-1.5_amd64.deb
+#RUN gdebi -n *.deb
+#RUN rm *.deb
+#RUN wget http://security.debian.org/debian-security/pool/updates/main/g/gst-plugins-base0.10/libgstreamer-plugins-base0.10-0_0.10.36-2+deb8u2_amd64.deb
+#RUN gdebi -n *.deb
+#RUN rm *.deb
+
+RUN wget https://download1.rstudio.org/desktop/bionic/amd64/rstudio-1.3.959-amd64.deb
+
 RUN gdebi -n *.deb
-RUN rm *.deb
-RUN wget http://security.debian.org/debian-security/pool/updates/main/g/gst-plugins-base0.10/libgstreamer-plugins-base0.10-0_0.10.36-2+deb8u2_amd64.deb
-RUN gdebi -n *.deb
-RUN rm *.deb
-RUN wget http://download1.rstudio.org/rstudio-1.1.463-amd64.deb
-RUN gdebi -n *.deb
+
 RUN rm *.deb
 
 # Config R
@@ -175,12 +178,25 @@ COPY Install_Packages.R Install_Packages.R
 RUN Rscript Install_Packages.R
 
 # rstudio preferences
-RUN mkdir -p /root/.rstudio-desktop/monitored/user-settings
-COPY user-settings /root/.rstudio-desktop/monitored/user-settings/user-settings
+RUN mkdir /etc/rstudio
+COPY rstudio-prefs.json /etc/rstudio/rstudio-prefs.json
+RUN mkdir ~/.config
+RUN mkdir ~/.config/rstudio
+#COPY rstudio-prefs.json ~/.config/rstudio/rstudio-prefs.json
+RUN mkdir ~/.config/rstudio/dictionaries
+COPY languages-system.tar.gz languages-system.tar.gz
+RUN tar -xzvf languages-system.tar.gz -C ~/.config/rstudio/dictionaries/
+RUN rm -R languages-system.tar.gz
+
+#RUN mkdir -p /root/.rstudio-desktop/monitored/user-settings
+#COPY user-settings /root/.rstudio-desktop/monitored/user-settings/user-settings
 
 # the default packages for everyone running R
-#COPY Rprofile.site /etc/R/Rprofile.site
-COPY Rprofile.site /home/.Rprofile
+#COPY Rprofile.site /home/.Rprofile
+
+COPY Rprofile.site /etc/R/Rprofile.site
+
+COPY Rprofile.site /opt/R/${R_VERSION}/lib/R/etc/Rprofile.site
 
 # Cleaning
 #---------
@@ -192,6 +208,7 @@ RUN apt-get update -y
 # packges for X11 sharing
 RUN apt-get install -y --no-install-recommends \
                   libxslt-dev
+
 # correct bug on qt
 RUN apt-get install -y libqt5x11extras5
 RUN apt-get install --reinstall libxcb-xinerama0

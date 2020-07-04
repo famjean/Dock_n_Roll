@@ -3,7 +3,7 @@
 
 # Choose CRAN miror
 chooseCRANmirror(ind = 1)
-getOption( "repos" ) 
+getOption( "repos" )
 # Load checkpoint
 install.packages( "checkpoint" ) ;
 require( "checkpoint", character.only = TRUE ) ;
@@ -54,7 +54,7 @@ load.packages(
 "magrittr",
 "rmarkdown", "knitr", "citr", "caTools", "bitops", "rprojroot",
 "pander", "officer", "xtable", "flextable",
-"grid", "png", "cowplot","scales",
+"grid", "png", "cowplot","scales", "Cairo",
 "openxlsx", "crayon",
 load = FALSE
 )
