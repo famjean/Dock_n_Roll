@@ -10,11 +10,17 @@ FROM ubuntu:bionic
 # to know version
 RUN cat /etc/*release
 
+# Debloc https
+RUN apt-get install -y --no-install-recommends \
+                    apt-transport-https
+
 # Update source list
 RUN apt-get update
 
 # Set environment as non noninteractive
 ENV DEBIAN_FRONTEND noninteractive
+
+
 
 # Configure default locale, see https://github.com/rocker-org/rocker/issues/19
 RUN apt-get install -y --no-install-recommends \
@@ -52,7 +58,7 @@ RUN apt-get install -y --no-install-recommends \
                     libssl-dev littler g++ build-essential libgtk2.0-dev libicu-dev \
                     libbz2-dev liblzma-dev zlib1g-dev libopencv-features2d-dev lib32z1-dev \
                     zlib* libblas-dev liblapack-dev libgsl0-dev libudunits2-dev libglu1-mesa-dev \
-                    libnlopt-dev libmagick++-dev libperl-dev gfortran jags
+                    libnlopt-dev libmagick++-dev libperl-dev gfortran jags 
 
 # Install java
 RUN apt-get install -y --no-install-recommends \
@@ -116,9 +122,9 @@ RUN apt-get install -y --no-install-recommends \
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-                           build-essential gfortran libpcre2-dev xorg-dev libcurl4-openssl-dev  libbz2-dev texlive-fonts-extra default-jdk curl libpcre2-dev zlib1g-dev
+                            build-essential gfortran libpcre2-dev xorg-dev libcurl4-openssl-dev  libbz2-dev texlive-fonts-extra default-jdk curl libpcre2-dev zlib1g-dev
 
-ENV  R_VERSION=4.0.1
+ENV  R_VERSION=4.0.3
 
 RUN curl -O https://cran.rstudio.com/src/base/R-4/R-${R_VERSION}.tar.gz
 
@@ -161,7 +167,7 @@ RUN R --version
 #RUN gdebi -n *.deb
 #RUN rm *.deb
 
-RUN wget https://download1.rstudio.org/desktop/bionic/amd64/rstudio-1.3.959-amd64.deb
+RUN wget https://download1.rstudio.org/desktop/bionic/amd64/rstudio-1.3.1093-amd64.deb
 
 RUN gdebi -n *.deb
 
@@ -235,10 +241,12 @@ RUN cat /etc/*release
 
 RUN R --version
 
+RUN R -e "sessionInfo()"
+
 MAINTAINER "François A.M. Jean francois.jean.pro@gmx.com"
 LABEL OS="ubuntu bionic 18.04.4" \
-      R="R 4.0.1" \
-      MRAN="2020.06.06"
+      R="R 4.0.3" \
+      MRAN="2020.10.10"
 
 # Set default start application (script needed beceause bug on QT5 keybord sharing)
 CMD /bin/launch.sh
