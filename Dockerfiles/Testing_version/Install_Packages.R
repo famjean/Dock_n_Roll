@@ -4,27 +4,28 @@
 # Choose CRAN miror
 chooseCRANmirror(ind = 1)
 getOption( "repos" )
+.libPaths()
+
 # Load checkpoint
 install.packages( "checkpoint" ) ;
 require( "checkpoint", character.only = TRUE ) ;
+
+# WD
 
 # job
 getOption( "repos" ) -> oldrepos1 ;
 
 paste( sessionInfo()$R.version$year, sessionInfo()$R.version$month,  sessionInfo()$R.version$day, sep = "-" ) -> date;
 
-dir.create( file.path("/home", "CHECKPOINT/.checkpoint"), recursive = TRUE, showWarnings = FALSE )
+dir.create( file.path("/root", ".checkpoint", paste( sessionInfo()$R.version$year, sessionInfo()$R.version$month,  sessionInfo()$R.version$day, sep = "-" ), "lib", sessionInfo()$R.version$platform, paste0(sessionInfo()$R.version$major, ".", sessionInfo()$R.version$minor)  ), 
+recursive = TRUE, showWarnings = FALSE )
 
-file.path("/home", "CHECKPOINT") -> file
-
-checkpoint( date, project = file, checkpointLocation = file  ) ;
-
-setSnapshot( date )
+checkpoint( date ) ;
 
 getOption("repos")
 .libPaths()
 
-save( date, file, file = paste0( file, "/", "date.RData" ) )
+save( date, file = paste0( "/root/.checkpoint/", "date.RData" ) )
 
 rm( date, file )
 
@@ -52,7 +53,7 @@ load.packages(
 "lme4", "packrat",
 "tidyverse", "lubridate", "forcats", "stringr",
 "magrittr",
-"rmarkdown", "knitr", "citr", "caTools", "bitops", "rprojroot",
+"rmarkdown", "knitr", "caTools", "bitops", "rprojroot",
 "pander", "officer", "xtable", "flextable",
 "grid", "png", "cowplot","scales", "Cairo",
 "openxlsx", "crayon",

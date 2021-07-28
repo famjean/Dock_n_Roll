@@ -122,9 +122,9 @@ RUN apt-get install -y --no-install-recommends \
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-                            build-essential gfortran libpcre2-dev xorg-dev libcurl4-openssl-dev  libbz2-dev texlive-fonts-extra default-jdk curl libpcre2-dev zlib1g-dev
+                            build-essential gfortran libpcre2-dev xorg-dev libcurl4-openssl-dev  libbz2-dev default-jdk curl libpcre2-dev zlib1g-dev
 
-ENV  R_VERSION=4.0.3
+ENV  R_VERSION=4.0.4
 
 RUN curl -O https://cran.rstudio.com/src/base/R-4/R-${R_VERSION}.tar.gz
 
@@ -167,7 +167,7 @@ RUN R --version
 #RUN gdebi -n *.deb
 #RUN rm *.deb
 
-RUN wget https://download1.rstudio.org/desktop/bionic/amd64/rstudio-1.3.1093-amd64.deb
+RUN wget https://download1.rstudio.org/desktop/bionic/amd64/rstudio-1.4.1717-amd64.deb
 
 RUN gdebi -n *.deb
 
@@ -244,9 +244,9 @@ RUN R --version
 RUN R -e "sessionInfo()"
 
 MAINTAINER "François A.M. Jean francois.jean.pro@gmx.com"
-LABEL OS="ubuntu bionic 18.04.4" \
-      R="R 4.0.3" \
-      MRAN="2020.10.10"
+LABEL OS="ubuntu bionic 18.04.5" \
+      R="R 4.0.4" \
+      MRAN="2021.02.15"
 
 # Set default start application (script needed beceause bug on QT5 keybord sharing)
 CMD /bin/launch.sh
