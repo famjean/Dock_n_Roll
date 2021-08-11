@@ -23,12 +23,9 @@
 #})
 
 
-.First <- function(){
+
 library(checkpoint)
-getOption( "repos" ) -> oldrepos
-load( "/root/.checkpoint/date.RData")
-checkpoint( date)
-rm( date )
+checkpoint( paste( utils::sessionInfo()$R.version$year, utils::sessionInfo()$R.version$month,  utils::sessionInfo()$R.version$day, sep = "-" ) )
 library(tidyverse)
 library(lubridate)
 library(forcats)
@@ -54,4 +51,3 @@ cat( crayon::red( "CAUTION, Repository is:\n" ) )
 cat( crayon::blue( paste0( getOption( "repos" )[[1]], "\n" ) ) )
 cat( crayon::red( "CAUTION, library paths are:\n" ) )
 cat( crayon::blue( paste0( .libPaths(), "\n" ) ) )
-}

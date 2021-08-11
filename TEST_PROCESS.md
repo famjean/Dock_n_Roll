@@ -7,7 +7,7 @@ xhost local:root # To correct bug for ubuntu X11
 docker run -it -v ~/Desktop/LinkFile:/home/LinkFile  -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY famjean/dock_n_roll
 
 2/ launch commit mode
-NAMEROLLR="roll_r404"
+NAMEROLLR="roll_r410"
 docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY famjean/dock_n_roll bash && NUMIMAGE=`docker ps |  grep "dock_n_roll" | tr "        " "\n" | sed -n '1p'` && docker exec -it $NUMIMAGE launch.sh && docker commit $NUMIMAGE $NAMEROLLR && docker stop $NUMIMAGE
 
 3/ apply:
@@ -29,40 +29,37 @@ https://github.com/famjean/DossierTest.git
 10/ knit something for html docx and pdf formats
 11/ quit
 12/ reopen:
-docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY $NAMEROLLR bash && NUMIMAGE=`docker ps |  grep "roll_r404" | tr "        " "\n" | sed -n '1p'` && docker exec -it $NUMIMAGE launch.sh && docker commit $NUMIMAGE $NAMEROLLR && docker stop $NUMIMAGE
+docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY $NAMEROLLR bash && NUMIMAGE=`docker ps |  grep "roll_r410" | tr "        " "\n" | sed -n '1p'` && docker exec -it $NUMIMAGE launch.sh && docker commit $NUMIMAGE $NAMEROLLR && docker stop $NUMIMAGE
 
 13/ check installed package: require(meta) and github
 14/ test command roll_rXXX and shortcut
-NAMEROLLR="roll_r404"
+NAMEROLLR="roll_r410"
 
 echo '#!/bin/bash
 xhost local:root
-NAMEROLLR="roll_r404"
-docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY $NAMEROLLR bash && NUMIMAGE=`docker ps |  grep "roll_r404" | tr "        " "\n" | sed -n '1p'` && docker exec -it $NUMIMAGE launch.sh && docker commit $NUMIMAGE $NAMEROLLR && docker stop $NUMIMAGE' > ~/$NAMEROLLR
+NAMEROLLR="roll_r410"
+docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY $NAMEROLLR bash && NUMIMAGE=`docker ps |  grep "roll_r410" | tr "        " "\n" | sed -n '1p'` && docker exec -it $NUMIMAGE launch.sh && docker commit $NUMIMAGE $NAMEROLLR && docker stop $NUMIMAGE' > ~/$NAMEROLLR
 
 sudo chmod 777 ~/$NAMEROLLR && sudo cp ~/$NAMEROLLR /usr/local/bin/ && rm ~/$NAMEROLLR
 
 echo '[Desktop Entry] Version=1.0
 Type=Application
 Terminal=true
-Name=Roll R404
-Exec=/usr/local/bin/roll_r404
+Name=Roll R410
+Exec=/usr/local/bin/roll_r410
 Icon=rlogo_icon
 Categories=Application;' > ~/$NAMEROLLR.desktop
 
 sudo cp ~/$NAMEROLLR.desktop /usr/share/applications/$NAMEROLLR.desktop && rm  ~/$NAMEROLLR.desktop
 
-roll_r404
+roll_r410
 
 # then delete shortcut
 sudo rm /usr/share/applications/$NAMEROLLR.desktop
 
-# rebuild
-docker build -t famjean/dock_n_roll:latest .
-
 14/ save image as archive and pull it on dock hub and valid release:
 
-docker save famjean/dock_n_roll:latest | gzip > UBUNTU.18.04.5_R.4.0.4_MRAN.2021-02-15.tgz
+docker save famjean/dock_n_roll:latest | gzip > UBUNTU.18.04.5_R.4.1.0_MRAN.2021-05-18.tgz
 
 docker login --username=yourhubusername --password=yourpassword
 
@@ -74,11 +71,11 @@ NUMIMAGE=`docker images |  grep "dock_n_roll" | grep "latest" | tr "            
 
 echo $NUMIMAGE
 
-docker tag $NUMIMAGE famjean/dock_n_roll:UBUNTU.18.04.5_R.4.0.4_MRAN.2021-02-15
+docker tag $NUMIMAGE famjean/dock_n_roll:UBUNTU.18.04.5_R.4.1.0_MRAN.2021-05-18
 
 docker images
 
-docker push famjean/dock_n_roll:latest && docker push famjean/dock_n_roll:UBUNTU.18.04.5_R.4.0.4_MRAN.2021-02-15
+docker push famjean/dock_n_roll:latest && docker push famjean/dock_n_roll:UBUNTU.18.04.5_R.4.1.0_MRAN.2021-05-18
 
 15/ Change the readme on https://hub.docker.com/
 

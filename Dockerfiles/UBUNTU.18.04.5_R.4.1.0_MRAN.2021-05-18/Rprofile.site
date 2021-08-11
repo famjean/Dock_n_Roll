@@ -1,0 +1,53 @@
+##						Emacs please make this -*- R -*-
+## empty Rprofile.site for R on Debian
+##
+## Copyright (C) 2008 - 2018  Dirk Eddelbuettel and GPL'ed
+##
+## see help(Startup) for documentation on ~/.Rprofile and Rprofile.site
+
+# ## Example of .Rprofile
+# options(width=65, digits=5)
+# options(show.signif.stars=FALSE)
+# setHook(packageEvent("grDevices", "onLoad"),
+#         function(...) grDevices::ps.options(horizontal=FALSE))
+# set.seed(1234)
+# .First <- function() cat("\n   Welcome to R!\n\n")
+# .Last <- function()  cat("\n   Goodbye!\n\n")
+
+# ## Example of Rprofile.site
+# local({
+#  # add MASS to the default packages, set a CRAN mirror
+#  old <- getOption("defaultPackages"); r <- getOption("repos")
+#  r["CRAN"] <- "http://my.local.cran"
+#  options(defaultPackages = c(old, "MASS"), repos = r)
+#})
+
+
+
+library(checkpoint)
+checkpoint( paste( utils::sessionInfo()$R.version$year, utils::sessionInfo()$R.version$month,  utils::sessionInfo()$R.version$day, sep = "-" ) )
+library(tidyverse)
+library(lubridate)
+library(forcats)
+library(stringr)
+library(magrittr)
+library(rmarkdown)
+library(knitr)
+library(caTools)
+#library(bitops)
+#library(rprojroot)
+library(pander)
+#library(officer)
+#library(xtable)
+#library(flextable)
+#library(grid)
+library(png)
+#library(cowplot)
+library(scales)
+library(openxlsx)
+print( utils::sessionInfo() )
+cat( " \n" )
+cat( crayon::red( "CAUTION, Repository is:\n" ) )
+cat( crayon::blue( paste0( getOption( "repos" )[[1]], "\n" ) ) )
+cat( crayon::red( "CAUTION, library paths are:\n" ) )
+cat( crayon::blue( paste0( .libPaths(), "\n" ) ) )

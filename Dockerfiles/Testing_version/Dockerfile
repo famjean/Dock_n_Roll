@@ -58,7 +58,7 @@ RUN apt-get install -y --no-install-recommends \
                     libssl-dev littler g++ build-essential libgtk2.0-dev libicu-dev \
                     libbz2-dev liblzma-dev zlib1g-dev libopencv-features2d-dev lib32z1-dev \
                     zlib* libblas-dev liblapack-dev libgsl0-dev libudunits2-dev libglu1-mesa-dev \
-                    libnlopt-dev libmagick++-dev libperl-dev gfortran jags 
+                    libnlopt-dev libmagick++-dev libperl-dev gfortran jags
 
 # Install java
 RUN apt-get install -y --no-install-recommends \
@@ -124,7 +124,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
                             build-essential gfortran libpcre2-dev xorg-dev libcurl4-openssl-dev  libbz2-dev default-jdk curl libpcre2-dev zlib1g-dev
 
-ENV  R_VERSION=4.0.4
+ENV  R_VERSION=4.1.0
 
 RUN curl -O https://cran.rstudio.com/src/base/R-4/R-${R_VERSION}.tar.gz
 
@@ -245,8 +245,8 @@ RUN R -e "sessionInfo()"
 
 MAINTAINER "François A.M. Jean francois.jean.pro@gmx.com"
 LABEL OS="ubuntu bionic 18.04.5" \
-      R="R 4.0.4" \
-      MRAN="2021.02.15"
+      R="R 4.1.0" \
+      MRAN="2021.05.18"
 
 # Set default start application (script needed beceause bug on QT5 keybord sharing)
 CMD /bin/launch.sh
