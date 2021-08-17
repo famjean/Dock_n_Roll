@@ -124,7 +124,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
                             build-essential gfortran libpcre2-dev xorg-dev libcurl4-openssl-dev  libbz2-dev default-jdk curl libpcre2-dev zlib1g-dev
 
-ENV  R_VERSION=4.1.0
+ENV  R_VERSION=4.1.1
 
 RUN curl -O https://cran.rstudio.com/src/base/R-4/R-${R_VERSION}.tar.gz
 
@@ -245,8 +245,8 @@ RUN R -e "sessionInfo()"
 
 MAINTAINER "François A.M. Jean francois.jean.pro@gmx.com"
 LABEL OS="ubuntu bionic 18.04.5" \
-      R="R 4.1.0" \
-      MRAN="2021.05.18"
+      R="R 4.1.1" \
+      MRAN="2021.08.10"
 
 # Set default start application (script needed beceause bug on QT5 keybord sharing)
 CMD /bin/launch.sh
