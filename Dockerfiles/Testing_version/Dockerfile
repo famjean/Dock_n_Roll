@@ -58,7 +58,7 @@ RUN apt-get install -y --no-install-recommends \
                     libssl-dev littler g++ build-essential libgtk2.0-dev libicu-dev \
                     libbz2-dev liblzma-dev zlib1g-dev libopencv-features2d-dev lib32z1-dev \
                     zlib* libblas-dev liblapack-dev libgsl0-dev libudunits2-dev libglu1-mesa-dev \
-                    libnlopt-dev libmagick++-dev libperl-dev gfortran jags
+                    libnlopt-dev libmagick++-dev libperl-dev gfortran jags tk8.6-dev tcl8.6-dev
 
 # Install java
 RUN apt-get install -y --no-install-recommends \
@@ -140,6 +140,7 @@ RUN bash ./configure \
     --with-blas \
     --with-lapack \
     --with-readline=no \
+    --with-tcltk \
     --with-x=yes
 
 RUN make
