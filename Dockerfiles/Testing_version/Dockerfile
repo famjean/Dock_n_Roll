@@ -5,7 +5,7 @@
 #-------
 # Choose distribution to https://hub.docker.com/_/ubuntu/
 # Define distribution
-FROM ubuntu:bionic
+FROM ubuntu:focal
 
 # to know version
 RUN cat /etc/*release
@@ -49,7 +49,8 @@ RUN apt-get install -y --no-install-recommends \
 		                less \
 		                ca-certificates \
                     fonts-texgyre \
-                    gnupg gnupg2
+                    gnupg gnupg2 \
+                    snapd
 
 # Necessary Packages for R
 RUN apt-get install -y --no-install-recommends \
@@ -58,13 +59,14 @@ RUN apt-get install -y --no-install-recommends \
                     libssl-dev littler g++ build-essential libgtk2.0-dev libicu-dev \
                     libbz2-dev liblzma-dev zlib1g-dev libopencv-features2d-dev lib32z1-dev \
                     zlib* libblas-dev liblapack-dev libgsl0-dev libudunits2-dev libglu1-mesa-dev \
-                    libnlopt-dev libmagick++-dev libperl-dev gfortran jags tk8.6-dev tcl8.6-dev
+                    libnlopt-dev libmagick++-dev libperl-dev gfortran jags tk8.6-dev tcl8.6-dev \
+                    libpcre++-dev libgdal-dev dbus-x11
 
 # Install java
 RUN apt-get install -y --no-install-recommends \
                     default-jdk \
-                    default-jre \
-                    libpcre++-dev
+                    default-jre
+
 
 # Install git
 RUN apt-get install -y --no-install-recommends \
@@ -97,21 +99,25 @@ RUN apt-get install -y --no-install-recommends --fix-missing \
 # Install evince and ristretto to read rmarkdown output
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-                    evince \
+                    atril \
                     ristretto \
                     tumbler \
                     thunar
+# evince \
 
 # Install libreoffice
 # get link on https://www.libreoffice.org/download/download/
-#RUN wget https://download.documentfoundation.org/libreoffice/stable/6.4.3/deb/x86_64/LibreOffice_6.4.3_Linux_x86-64_deb.tar.gz
-#RUN tar -xf *.tar.gz
-#RUN rm *.tar.gz
-#RUN dpkg -i LibreOffice_*/DEBS/*.deb
-#RUN rm -R LibreOffice_*/
+# or https://downloadarchive.documentfoundation.org/libreoffice/old/5.4.7.2/deb/x86_64/
+RUN wget https://downloadarchive.documentfoundation.org/libreoffice/old/5.4.7.2/deb/x86_64/LibreOffice_5.4.7.2_Linux_x86-64_deb.tar.gz
+RUN tar -zxvf *.tar.gz
+RUN rm *.tar.gz
+RUN dpkg -i LibreOffice_*/DEBS/*.deb
+RUN rm -R LibreOffice_*/
 
-RUN apt-get install -y --no-install-recommends \
-                   libreoffice
+#RUN apt-get install -y --no-install-recommends \
+#  libreoffice libreoffice-java-common
+
+RUN export LD_LIBRARY_PATH="/usr/lib/libreoffice/program:$LD_LIBRARY_PATH"
 
 # Install R and Rstudio
 #----------------------
@@ -124,7 +130,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
                             build-essential gfortran libpcre2-dev xorg-dev libcurl4-openssl-dev  libbz2-dev default-jdk curl libpcre2-dev zlib1g-dev
 
-ENV  R_VERSION=4.1.1
+ENV  R_VERSION=4.1.2
 
 RUN curl -O https://cran.rstudio.com/src/base/R-4/R-${R_VERSION}.tar.gz
 
@@ -168,7 +174,7 @@ RUN R --version
 #RUN gdebi -n *.deb
 #RUN rm *.deb
 
-RUN wget https://download1.rstudio.org/desktop/bionic/amd64/rstudio-1.4.1717-amd64.deb
+RUN wget https://download1.rstudio.org/desktop/bionic/amd64/rstudio-2021.09.1-372-amd64.deb
 
 RUN gdebi -n *.deb
 
@@ -207,7 +213,7 @@ COPY Rprofile.site /opt/R/${R_VERSION}/lib/R/etc/Rprofile.site
 
 # Cleaning
 #---------
-RUN apt-get autoremove -y && apt-get clean -y
+RUN apt-get autoremove -y && apt-get autoclean -y
 RUN apt-get update -y
 
 # Debuging
@@ -245,9 +251,9 @@ RUN R --version
 RUN R -e "sessionInfo()"
 
 MAINTAINER "François A.M. Jean francois.jean.pro@gmx.com"
-LABEL OS="ubuntu bionic 18.04.5" \
-      R="R 4.1.1" \
-      MRAN="2021.08.10"
+LABEL OS="ubuntu bionic 20.04.3" \
+      R="R 4.1.2" \
+      MRAN="2021.01.01"
 
 # Set default start application (script needed beceause bug on QT5 keybord sharing)
 CMD /bin/launch.sh

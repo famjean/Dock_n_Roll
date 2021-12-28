@@ -26,14 +26,15 @@ Git allows managing versions of your projects.
 ### Launch image (could take a while for packages loading, more if you are not online):   
 ####For linux:
 ```bash
-xhost local:root # To correct bug for ubuntu X11
-docker run -it -v ~/Desktop/LinkFile:/home/LinkFile  -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY famjean/dock_n_roll  
+sudo apt-get install dbus-x11 # To correct bug for ubuntu X11
+xhost +local:docker # To correct bug for ubuntu X11
+docker run -it --privileged -v ~/Desktop/LinkFile:/home/LinkFile  -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY famjean/dock_n_roll  
 ```
 
 #### For windows:  
 ```bash
 xming :0 -ac -clipboard -multiwindow   
-docker run -it -e DISPLAY=hostip:0   -v c:/Users/Desktop/LinkFile:/home/LinkFile famjean/dock_n_roll
+docker run -it --privileged -e DISPLAY=hostip:0   -v c:/Users/Desktop/LinkFile:/home/LinkFile famjean/dock_n_roll
 ```
 
 #### For macos:  
@@ -42,7 +43,7 @@ brew install socat
 brew cask install xquartz   
 open -a XQuartz  
 socat TCP-LISTEN:6000,reuseaddr,fork UNIX-CLIENT:\"$DISPLAY\"   
-docker run -it -e DISPLAY=hostip:0 -v ~/Desktop/LinkFile:/home/LinkFile famjean/dock_n_roll
+docker run -it --privileged -e DISPLAY=hostip:0 -v ~/Desktop/LinkFile:/home/LinkFile famjean/dock_n_roll
 ```
 
 ### More:
@@ -57,12 +58,12 @@ See [example](https://www.r-bloggers.com/running-your-r-script-in-docker/amp/) o
 ```bash
 # Before launching, be sure that no images with the same name is running with docker ps
 #Launch:
-xhost local:root # for linux
+xhost +local:docker # for linux
 NAMEROLLR="roll_rXXX" # replace XXX by R version number
-docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY famjean/dock_n_roll bash && NUMIMAGE=`docker ps |  grep "dock_n_roll" | tr "        " "\n" | sed -n '1p'` && docker exec -it $NUMIMAGE launch.sh && docker commit $NUMIMAGE $NAMEROLLR && docker stop $NUMIMAGE
+docker run -d -it --privileged -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY famjean/dock_n_roll bash && NUMIMAGE=`docker ps |  grep "dock_n_roll" | tr "        " "\n" | sed -n '1p'` && docker exec -it --privileged $NUMIMAGE launch.sh && docker commit $NUMIMAGE $NAMEROLLR && docker stop $NUMIMAGE
 
 #Relaunch
-docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY $NAMEROLLR bash && NUMIMAGE=`docker ps |  grep "roll_rXXX" | tr "        " "\n" | sed -n '1p'` && docker exec -it $NUMIMAGE launch.sh && docker commit $NUMIMAGE $NAMEROLLR && docker stop $NUMIMAGE
+docker run -d -it --privileged -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY $NAMEROLLR bash && NUMIMAGE=`docker ps |  grep "roll_rXXX" | tr "        " "\n" | sed -n '1p'` && docker exec -it --privileged $NUMIMAGE launch.sh && docker commit $NUMIMAGE $NAMEROLLR && docker stop $NUMIMAGE
 
 # For linux users: create an executable script launchable and a shortcut for the menu
 NAMEROLLR="roll_rXXX" # replace XXX by R version number
@@ -71,7 +72,7 @@ NAMEROLLR="roll_rXXX" # replace XXX by R version number
 echo '#!/bin/bash
 xhost local:root
 NAMEROLLR="roll_rXXX"
-docker run -d -it -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY $NAMEROLLR bash && NUMIMAGE=`docker ps |  grep "roll_rXXX" | tr "        " "\n" | sed -n '1p'` && docker exec -it $NUMIMAGE launch.sh && docker commit $NUMIMAGE $NAMEROLLR && docker stop $NUMIMAGE' > ~/$NAMEROLLR
+docker run -d -it --privileged -v ~/Desktop/LinkFile:/home/LinkFile -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY $NAMEROLLR bash && NUMIMAGE=`docker ps |  grep "roll_rXXX" | tr "        " "\n" | sed -n '1p'` && docker exec -it --privileged $NUMIMAGE launch.sh && docker commit $NUMIMAGE $NAMEROLLR && docker stop $NUMIMAGE' > ~/$NAMEROLLR
 
 sudo chmod 777 ~/$NAMEROLLR && sudo cp ~/$NAMEROLLR /usr/local/bin/ && rm ~/$NAMEROLLR
 
@@ -95,7 +96,7 @@ roll_rXXX # replace XXX by R version number
 ## Generate image from Dockerfile and save it
 ```bash
 # see last ubuntu version
-docker run ubuntu:bionic cat /etc/issue
+docker run ubuntu:focal cat /etc/issue
 #Put you in the file with Dockerfile and other files (use cd or equivalent).
 docker build -t famjean/dock_n_roll:latest .
 # tag image

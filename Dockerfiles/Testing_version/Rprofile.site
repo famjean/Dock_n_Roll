@@ -23,31 +23,16 @@
 #})
 
 
-
+.First <- function(){
 library(checkpoint)
-checkpoint( paste( utils::sessionInfo()$R.version$year, utils::sessionInfo()$R.version$month,  utils::sessionInfo()$R.version$day, sep = "-" ) )
-library(tidyverse)
-library(lubridate)
-library(forcats)
-library(stringr)
-library(magrittr)
-library(rmarkdown)
-library(knitr)
-library(caTools)
-#library(bitops)
-#library(rprojroot)
-library(pander)
-#library(officer)
-#library(xtable)
-#library(flextable)
-#library(grid)
-library(png)
-#library(cowplot)
-library(scales)
-library(openxlsx)
+getOption( "repos" ) -> oldrepos
+load( "/root/.checkpoint/date.RData")
+checkpoint( date)
+rm( date )
 print( utils::sessionInfo() )
 cat( " \n" )
 cat( crayon::red( "CAUTION, Repository is:\n" ) )
 cat( crayon::blue( paste0( getOption( "repos" )[[1]], "\n" ) ) )
 cat( crayon::red( "CAUTION, library paths are:\n" ) )
 cat( crayon::blue( paste0( .libPaths(), "\n" ) ) )
+}
