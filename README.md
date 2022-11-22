@@ -16,7 +16,7 @@ Pandoc and Latex are provided to permit the use of Rmarkdown to create reports.
 Git allows managing versions of your projects.
 
 ***
-## How to use
+## How to use 
 ### Install
 + install docker (for windows xming in addition and for macos socat and xquartz in addition)
 + Create on your Desktop and LinkFile file. It will be connected with the same file inside your container.
